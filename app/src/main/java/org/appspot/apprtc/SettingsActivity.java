@@ -10,19 +10,21 @@
 
 package org.appspot.apprtc;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
+
 import org.webrtc.Camera2Enumerator;
 import org.webrtc.audio.JavaAudioDeviceModule;
 
 /**
  * Settings activity for AppRTC.
  */
-public class SettingsActivity extends Activity implements OnSharedPreferenceChangeListener {
+public class SettingsActivity extends AppCompatActivity implements OnSharedPreferenceChangeListener {
   private SettingsFragment settingsFragment;
   private String keyprefVideoCall;
   private String keyprefScreencapture;
@@ -108,7 +110,7 @@ public class SettingsActivity extends Activity implements OnSharedPreferenceChan
 
     // Display the fragment as the main content.
     settingsFragment = new SettingsFragment();
-    getFragmentManager()
+    getSupportFragmentManager()
         .beginTransaction()
         .replace(android.R.id.content, settingsFragment)
         .commit();

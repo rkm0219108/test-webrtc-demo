@@ -10,13 +10,14 @@
 
 package org.appspot.apprtc;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -31,9 +32,9 @@ import java.io.StringWriter;
  */
 public class UnhandledExceptionHandler implements Thread.UncaughtExceptionHandler {
   private static final String TAG = "AppRTCMobileActivity";
-  private final Activity activity;
+  private final AppCompatActivity activity;
 
-  public UnhandledExceptionHandler(final Activity activity) {
+  public UnhandledExceptionHandler(final AppCompatActivity activity) {
     this.activity = activity;
   }
 
@@ -57,7 +58,7 @@ public class UnhandledExceptionHandler implements Thread.UncaughtExceptionHandle
             System.exit(1);
           }
         };
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        androidx.appcompat.app.AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle(title)
             .setView(scrollingContainer)
             .setPositiveButton("Exit", listener)

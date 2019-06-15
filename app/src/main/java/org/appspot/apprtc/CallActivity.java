@@ -11,9 +11,6 @@
 package org.appspot.apprtc;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,12 +30,10 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
-import java.io.IOException;
-import java.lang.RuntimeException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 import org.appspot.apprtc.AppRTCAudioManager.AudioDevice;
 import org.appspot.apprtc.AppRTCAudioManager.AudioManagerEvents;
 import org.appspot.apprtc.AppRTCClient.RoomConnectionParameters;
@@ -63,11 +58,16 @@ import org.webrtc.VideoFileRenderer;
 import org.webrtc.VideoFrame;
 import org.webrtc.VideoSink;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Activity for peer connection call setup, call waiting
  * and call view.
  */
-public class CallActivity extends Activity implements AppRTCClient.SignalingEvents,
+public class CallActivity extends AppCompatActivity implements AppRTCClient.SignalingEvents,
                                                       PeerConnectionClient.PeerConnectionEvents,
                                                       CallFragment.OnCallEvents {
   private static final String TAG = "CallRTCClient";
@@ -356,7 +356,7 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
     callFragment.setArguments(intent.getExtras());
     hudFragment.setArguments(intent.getExtras());
     // Activate call and HUD fragments and start the call.
-    FragmentTransaction ft = getFragmentManager().beginTransaction();
+    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
     ft.add(R.id.call_fragment_container, callFragment);
     ft.add(R.id.hud_fragment_container, hudFragment);
     ft.commit();
@@ -465,7 +465,7 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
 
   @TargetApi(21)
   private @Nullable VideoCapturer createScreenCapturer() {
-    if (mediaProjectionPermissionResultCode != Activity.RESULT_OK) {
+    if (mediaProjectionPermissionResultCode != AppCompatActivity.RESULT_OK) {
       reportError("User didn't give permission to capture the screen.");
       return null;
     }
@@ -558,7 +558,7 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
     }
     // Show/hide call control fragment
     callControlFragmentVisible = !callControlFragmentVisible;
-    FragmentTransaction ft = getFragmentManager().beginTransaction();
+    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
     if (callControlFragmentVisible) {
       ft.show(callFragment);
       ft.show(hudFragment);

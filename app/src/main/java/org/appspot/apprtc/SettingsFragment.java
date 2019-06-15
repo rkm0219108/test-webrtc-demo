@@ -11,16 +11,15 @@
 package org.appspot.apprtc;
 
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
+
+import androidx.preference.PreferenceFragmentCompat;
 
 /**
  * Settings fragment for AppRTC.
  */
-public class SettingsFragment extends PreferenceFragment {
+public class SettingsFragment extends PreferenceFragmentCompat {
   @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    // Load the preferences from an XML resource
-    addPreferencesFromResource(R.xml.preferences);
+  public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+    setPreferencesFromResource(R.xml.preferences, rootKey);
   }
 }
