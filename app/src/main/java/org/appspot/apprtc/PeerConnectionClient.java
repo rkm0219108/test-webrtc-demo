@@ -13,32 +13,11 @@ package org.appspot.apprtc;
 import android.content.Context;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.appspot.apprtc.AppRTCClient.SignalingParameters;
-import org.appspot.apprtc.RecordedAudioToFileController;
 import org.webrtc.AudioSource;
 import org.webrtc.AudioTrack;
 import org.webrtc.CameraVideoCapturer;
@@ -51,7 +30,6 @@ import org.webrtc.Logging;
 import org.webrtc.MediaConstraints;
 import org.webrtc.MediaStream;
 import org.webrtc.MediaStreamTrack;
-import org.webrtc.MediaStreamTrack.MediaType;
 import org.webrtc.PeerConnection;
 import org.webrtc.PeerConnection.IceConnectionState;
 import org.webrtc.PeerConnection.PeerConnectionState;
@@ -77,6 +55,26 @@ import org.webrtc.audio.AudioDeviceModule;
 import org.webrtc.audio.JavaAudioDeviceModule;
 import org.webrtc.audio.JavaAudioDeviceModule.AudioRecordErrorCallback;
 import org.webrtc.audio.JavaAudioDeviceModule.AudioTrackErrorCallback;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Peer connection client implementation.
@@ -205,8 +203,8 @@ public class PeerConnectionClient {
    * Peer connection parameters.
    */
   public static class PeerConnectionParameters {
+
     public final boolean videoCallEnabled;
-    public final boolean loopback;
     public final boolean tracing;
     public final int videoWidth;
     public final int videoHeight;
@@ -228,7 +226,7 @@ public class PeerConnectionClient {
     public final boolean enableRtcEventLog;
     private final DataChannelParameters dataChannelParameters;
 
-    public PeerConnectionParameters(boolean videoCallEnabled, boolean loopback, boolean tracing,
+    public PeerConnectionParameters(boolean videoCallEnabled, boolean tracing,
         int videoWidth, int videoHeight, int videoFps, int videoMaxBitrate, String videoCodec,
         boolean videoCodecHwAcceleration, boolean videoFlexfecEnabled, int audioStartBitrate,
         String audioCodec, boolean noAudioProcessing, boolean aecDump, boolean saveInputAudioToFile,
@@ -236,7 +234,6 @@ public class PeerConnectionClient {
         boolean disableBuiltInNS, boolean disableWebRtcAGCAndHPF, boolean enableRtcEventLog,
         DataChannelParameters dataChannelParameters) {
       this.videoCallEnabled = videoCallEnabled;
-      this.loopback = loopback;
       this.tracing = tracing;
       this.videoWidth = videoWidth;
       this.videoHeight = videoHeight;
@@ -573,7 +570,7 @@ public class PeerConnectionClient {
     // Use ECDSA encryption.
     rtcConfig.keyType = PeerConnection.KeyType.ECDSA;
     // Enable DTLS for normal calls and disable for loopback calls.
-    rtcConfig.enableDtlsSrtp = !peerConnectionParameters.loopback;
+    rtcConfig.enableDtlsSrtp = true;
     rtcConfig.sdpSemantics = PeerConnection.SdpSemantics.UNIFIED_PLAN;
 
     peerConnection = factory.createPeerConnection(rtcConfig, pcObserver);
