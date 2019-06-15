@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,7 +13,7 @@
         android:id="@+id/room_edittext_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/room_description" />
+        android:text="@string/room_description"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -20,14 +22,16 @@
         android:gravity="center"
         android:layout_marginBottom="8dp">
 
+        <!-- TODO(crbug.com/900912): Fix and remove lint ignore -->
         <EditText
+            tools:ignore="LabelFor"
             android:id="@+id/room_edittext"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:maxLines="1"
             android:imeOptions="actionDone"
-            android:inputType="text" />
+            android:inputType="text"/>
 
         <ImageButton
             android:id="@+id/connect_button"
@@ -53,7 +57,7 @@
         android:maxLines="1"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/favorites"
-        android:gravity="center_vertical" />
+        android:gravity="center_vertical"/>
 
     <FrameLayout
         android:layout_width="match_parent"
