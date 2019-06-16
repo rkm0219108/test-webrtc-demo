@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import org.jetbrains.annotations.NotNull;
 import org.webrtc.StatsReport;
 
 import java.util.HashMap;
@@ -41,8 +42,7 @@ public class HudFragment extends Fragment {
   private CpuMonitor cpuMonitor;
 
   @Override
-  public View onCreateView(
-      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View controlView = inflater.inflate(R.layout.fragment_hud, container, false);
 
     // Create UI controls.
@@ -53,14 +53,11 @@ public class HudFragment extends Fragment {
     hudViewVideoRecv = controlView.findViewById(R.id.hud_stat_video_recv);
     toggleDebugButton = controlView.findViewById(R.id.button_toggle_debug);
 
-    toggleDebugButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        if (displayHud) {
-          int visibility =
-              (hudViewBwe.getVisibility() == View.VISIBLE) ? View.INVISIBLE : View.VISIBLE;
-          hudViewsSetProperties(visibility);
-        }
+    toggleDebugButton.setOnClickListener(view -> {
+      if (displayHud) {
+        int visibility =
+            (hudViewBwe.getVisibility() == View.VISIBLE) ? View.INVISIBLE : View.VISIBLE;
+        hudViewsSetProperties(visibility);
       }
     });
 
